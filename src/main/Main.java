@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String inpText, inpKey;
+        String inpText, inpKey, flag;
 
         Read read = new Read();
         Write write = new Write();
@@ -15,10 +15,11 @@ public class Main {
 
         inpText = read.readString();
         inpKey = read.readString();
-        String encodedText = enc.transpCipherEnc(inpText, inpKey);
+        flag = read.readString();
+        String resultText = enc.transpCipherEnc(inpText, inpKey, flag);
 
-        System.out.println(encodedText);
-        write.writeToFile("Encoded Text.txt", encodedText);
+        System.out.println("Operation result:\n" + resultText);
+        write.writeToFile("Result Text.txt", resultText);
 
     }
 }

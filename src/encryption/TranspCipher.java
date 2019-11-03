@@ -4,7 +4,8 @@ import java.util.*;
 
 public class TranspCipher {
 
-    public String transpCipherEnc(String initData, String key){
+    public String transpCipherEnc(String initData, String key, String flag){
+        // Flag variable to define encode or decode is needed
 
         String[] keyArr = key.split("|");
         String[] dataArr = initData.split("|");
@@ -12,7 +13,7 @@ public class TranspCipher {
         int dataLen = dataArr.length;
         int textLen = (dataLen / keyLen); // Calculated for matrix second side length
         LinkedHashMap<String, String[]> dataMatrix = new LinkedHashMap<>();
-        String encodedText = "";
+        String resultText = "";
 
         // For creating array with enough length
         if(dataLen % keyLen != 0){
@@ -33,17 +34,30 @@ public class TranspCipher {
             }
         }
 
+
         // Map's keys correspond to the inputted keys. Keys corresponds with text matrix rows.
         int letter = 1;
         for(int i = 0; i < keyLen;i++){
             keyArr[i] = keyArr[i] + letter;
             letter++;
+        }
+
+        String[] initKeyArr = keyArr.clone(); // Clone of initial state of keyArr is needed for decoding
+
+        if(flag.equals("decode")){
+            Arrays.sort(keyArr);
+        }
+        for(int i = 0; i < keyLen;i++){
             dataMatrix.put(keyArr[i], textMatrix[i]);
         }
 
 
         // Keys sorted for letters misplacing. Main feature of transposition cipher encoding method.
         Arrays.sort(keyArr);
+
+        if(flag.equals("decode")){
+            keyArr = initKeyArr;
+        }
 
         // Assign new letters sequence to the text matrix.
         int temp = 0;
@@ -55,13 +69,16 @@ public class TranspCipher {
         for(int j = 0; j < textLen; j++){
             for(int i = 0; i < keyLen; i++){
                 if(textMatrix[i][j] != null){
-                    encodedText = encodedText + textMatrix[i][j];
+                    resultText = resultText + textMatrix[i][j];
+                }
+                else {
+                    resultText = resultText + " ";
                 }
             }
         }
 
 
-        return encodedText;
+        return resultText;
 
 
     }
