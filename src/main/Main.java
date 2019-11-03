@@ -10,6 +10,7 @@ public class Main {
         String inpText, inpKey;
 
         Read read = new Read();
+        Write write = new Write();
         TranspCipher enc = new TranspCipher();
 
         inpText = read.readString();
@@ -17,6 +18,7 @@ public class Main {
         String encodedText = enc.transpCipherEnc(inpText, inpKey);
 
         System.out.println(encodedText);
+        write.writeToFile("Encoded Text.txt", encodedText);
 
     }
 }
